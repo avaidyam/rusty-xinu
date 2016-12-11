@@ -5,6 +5,8 @@ extern {
 
 #[no_mangle]
 pub extern fn xdone() {
-    kprintf("\n\nAll user processes have completed.\n\n".as_ptr() as (*mut u8()));
-    halt();
+    unsafe {
+        kprintf("\n\nAll user processes have completed.\n\n".as_ptr() as (*mut u8()));
+        halt();
+    }
 }
