@@ -32,6 +32,7 @@ MKVERS		=	$(TOPDIR)/compile/bin/mkvers
 REBUILDFLAGS	=	-s $(TOPDIR)/system  debug.c		\
 			-s $(TOPDIR)/lib			\
 
+
 INCLUDE		=	-I$(TOPDIR)/include
 DEFS		= 	-DBSDURG -DVERSION=\""`cat $(VERSIONFILE)`"\"
 
@@ -43,7 +44,8 @@ SFLAGS  = ${INCLUDE}
 LDFLAGS = -dn -m elf_i386 -Map xinu.map -T $(LDSCRIPT)
 
 # Rust LD Flags
-RUSTLD = -L /homes/mmolo/.multirust/toolchains/nightly-x86_64-unknown-linux-gnu/lib/rustlib/i686-unknown-linux-gnu/lib -L binaries -ldouble -lgcc
+LIBXINU     	=	$(TOPDIR)/compile/binaries/libxinu.a
+RUSTLD			=	-L binaries -lxinu -lgcc
 
 all:	xinu
 
@@ -74,7 +76,7 @@ export
 # Specific additional rules and exceptions
 #--------------------------------------------------------------------------------
 
-xinu:	Makefile newversion rebuild $(BLDDIRS) $(DEFSFILE) $(DEPSFILE) $(LD_LIST)
+xinu: Makefile newversion rebuild $(BLDDIRS) $(DEFSFILE) $(DEPSFILE) $(LD_LIST) libxinu
 	@echo;echo 'Loading object files to produce GRUB bootable xinu'
 	$(LD) $(LDFLAGS) $(LD_LIST) $(RUSTLD) -o $(XINU)
 	@echo;echo 'Building $(XINUBIN)'
@@ -95,6 +97,7 @@ clean:
 	@echo removing xinu ...
 	@rm -f $(XINU)
 	@rm -f $(XINUXBIN)
+	@rm -rf binaries/libxinu.a
 
 #--------------------------------------------------------------------------------
 # Locations of source directories and exceptions (.c and .[sS] files to exclude)
@@ -109,6 +112,10 @@ $(DEPSFILE):
 	@rm -f $(DEPSFILE)
 	@echo "" > $(DEPSFILE)
 	@make depend
+
+libxinu:
+	rustc --target i686-unknown-linux-gnu --crate-type=staticlib $(TOPDIR)/libxinu/xinu.rs
+	mv libxinu.a $(LIBXINU)
 
 rebuild:
 	@echo Rebuilding the $(DEFSFILE) file
