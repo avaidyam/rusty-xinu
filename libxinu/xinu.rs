@@ -5,6 +5,8 @@
 
 // RustC Compile Support
 pub mod support;
+
+pub mod main;
 pub mod cpuio;
 pub mod exit;
 pub mod getpid;
