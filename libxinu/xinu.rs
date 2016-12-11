@@ -7,3 +7,4 @@ pub mod support;
 pub mod exit;
 pub mod getpid;
 pub mod xdone;
+pub mod userret;
