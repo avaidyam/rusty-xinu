@@ -2,23 +2,12 @@
 
 #include <xinu.h>
 
-extern int double_input(int input);
-extern int quadruple_input(int input);
-
-process	main(void)
-{
-	recvclr();
-	while (TRUE) {
-		kprintf("main()\n");
-		kprintf("Double 5: %d\n", double_input(5));
-		kprintf("Quadruple 10: %d\n", quadruple_input(10));
-		sleepms(500);
-		kprintf("main()\n");
-		kprintf("Double 5: %d\n", double_input(5));
-		kprintf("Quadruple 10: %d\n", quadruple_input(10));
-		sleepms(500);
-		kprintf("getpid: %d\n", getpid());
-	}
-	return OK;
-    
+process main(void) {
+    recvclr();
+    while (1) {
+        kprintf("main()\n");
+        kprintf("getpid: %d\n", getpid());
+        sleepms(500);
+    }
+    return OK;
 }

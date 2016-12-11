@@ -1,4 +1,3 @@
-
 extern {
     static currpid: i32;
 }
