@@ -13,6 +13,11 @@ process	main(void)
 		kprintf("Double 5: %d\n", double_input(5));
 		kprintf("Quadruple 10: %d\n", quadruple_input(10));
 		sleepms(500);
+		kprintf("main()\n");
+		kprintf("Double 5: %d\n", double_input(5));
+		kprintf("Quadruple 10: %d\n", quadruple_input(10));
+		sleepms(500);
+		kprintf("getpid: %d\n", getpid());
 	}
 	return OK;
     

@@ -1,9 +1,6 @@
 /* in file addargs.c */
 extern	status	addargs(pid32, int32, int32[], int32,char *, void *);
 
-/* in file ascdate.c */
-extern	status	ascdate(uint32, char *);
-
 /* in file bufinit.c */
 extern	status	bufinit(void);
 
